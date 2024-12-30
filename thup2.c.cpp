@@ -8,8 +8,8 @@ struct Date {
 };
 
 struct Student {
-    char student_id[100];
-    char classroom[100];
+    char student_id[10];
+    char classroom[10];
     char name[50];
     struct Date date;
     bool gender; 
@@ -31,6 +31,8 @@ int n = 5;
 void menuStart(int *menu) {
     do {
         printf("\n*** Student Management System Using C ***\n");
+        printf("\n\t\tCHOOSE YOUR ROLE\n");
+        printf("\t=======================\n");
         printf("\t[1] Admin.\n");
         printf("\t[2] Student.\n");
         printf("\t[3] Teacher.\n");
@@ -74,35 +76,69 @@ void showAllStudents() {
                students[i].number_course);
     }
     printf("-------------------------------------------------------------------------------------------------------------------------\n");
+   // back_or_exit();
 }
 
 void addStudent() {
+	// phan nay chua on chinh lai
+	struct Student new_student;
+	system("cls");
     if (n >= 100) {
         printf("Cannot add more students. Maximum capacity reached.\n");
         return;
     }
-
-    struct Student new_student;
-    printf("\nEnter information for new student:\n");
-    printf("Student ID: ");
-    scanf("%s", new_student.student_id);
-
-    printf("Classroom: ");
-    scanf("%s", new_student.classroom);
-
-    printf("Name: ");
+    char temp_id[100];
+    int check = 0;
+    printf("\n\t\t****Add a new student****\n");
+    printf("\n\tEnter information for new student:\n");
+    while(!check){
+    	printf("\n\t Input Student ID: ");
+        scanf("%s", temp_id);
+        check = 1;
+        for(int i=0;i<n;i++){
+        	if(strcmp(students[i].student_id,temp_id)==0){
+        		printf("Error: Duplicate id\n");
+        		check = 0;
+        		break;
+			}
+		}
+		if(strlen(temp_id)>10){
+			printf("Error : ID cannot be more than 10 characters.\n");
+            check = 0;
+		}
+	}
+	strcpy(new_student.student_id,temp_id);
+	////////
+	char temp_classroom[11];
+    while(1){
+    printf(" \tInput a classroom : ");
+    getchar();
+    fgets(new_student.classroom,sizeof(new_student.classroom),stdin);
+    new_student.classroom[strcspn(new_student.classroom,"\n")]='\0';
+	if(strlen(temp_classroom)>10){
+			printf("Error : ID classroom cannot be more than 10 characters.\n");
+	/*}else if(strlen(temp_classroom) == '0'){
+		printf("Error: Classroom cannot be empty ^ ^\n");*/
+	}else{
+		break;
+	}	
+	}
+	strcpy(new_student.classroom,temp_classroom);
+	////////
+    printf(" \tInput the name: ");
     getchar(); 
     fgets(new_student.name, sizeof(new_student.name), stdin);
     new_student.name[strcspn(new_student.name, "\n")] = '\0';
-
+    ////////
     printf("Birthdate (day month year): ");
     scanf("%d %d %d", &new_student.date.day, &new_student.date.month, &new_student.date.year);
-    getchar();
-    printf("Gender (1 for Male, 0 for Female): ");
+    /////////
+	printf("Gender (1 for Male, 0 for Female): ");
     int gender_input;
+    getchar();
     scanf("%d", &gender_input);
     new_student.gender = gender_input == 1;
-
+    ///////
     printf("Email: ");
     scanf("%s", new_student.email);
     getchar();
@@ -117,7 +153,9 @@ void addStudent() {
     getchar();
     students[n] = new_student;
     n++;
+    //student[n++]=new_student;
     printf("Student added successfully.\n");
+    //back_or_exit();
 }
 
 void editStudent() {
@@ -171,6 +209,7 @@ void editStudent() {
     scanf("%d", &student->number_course);
 
     printf("Student information updated successfully.\n");
+    //back_or_exit();
 }
 void searchStudent() {
     if (n <= 0) {
@@ -182,13 +221,12 @@ void searchStudent() {
     getchar();
     fgets(search, sizeof(search), stdin);
     search[strcspn(search, "\n")] = '\0';
-
     int check = 0;
     for (int i = 0; i < n; i++) {
         if (strstr(students[i].name, search) != NULL) {
             if (check == 0) {
                 printf("Student information found!!\n");
-                printf("|-----------------------------------------------------------------------------------------------------------------------|\n");
+                printf("-------------------------------------------------------------------------------------------------------------------------\n");
                 printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         |  Pass_word   | Courses |\n");
                 printf("|____|___________|________________|____________|_________|_____________________|_______________|______________|_________|\n");
             }
@@ -212,12 +250,28 @@ void searchStudent() {
     } else {
         printf("|-----------------------------------------------------------------------------------------------------------------------|\n");
     }
+    //back_or_exit();
 }
+
+void back_or_exit(){
+	char choice;
+	printf("\n\t\tGo back (b) or Exit (0) ? : ");
+	getchar();
+	scanf("%c",&choice);
+	if(choice == '0'){
+		printf("Exiting program...\n");
+		exit(0);
+	}else if(choice == 'b'){
+		displayMenu();
+	}else{
+		printf("Invalid choice !!");
+		printf("");
+	}
+} 
 
 int main() {
     int menu;
     menuStart(&menu);
-
     switch (menu) {
         case 1:
             printf("Admin role is under development.\n");
@@ -239,6 +293,7 @@ int main() {
                         break;
                     case 4:
                     	searchStudent();
+                    	 back_or_exit();
                     	break;
                     case 5:
                         printf("Exiting student menu...\n");
@@ -254,12 +309,24 @@ int main() {
             break;
         case 4:
             printf("Exiting program...\n");
+            exit(0);
             return 0;
         default:
             printf("Invalid choice. Exiting...\n");
-            return 1;
+            back_or_exit();
+            break;
     }
-
     return 0;
 }
+//Giao dien ket thuc chuong trinh 
+void printfinish(){
+	printf("========== Thank You ==========");
+	printf("======== See You Soon ========");
+}
+//printfinish();
+/*void exportStudentsToFile(const char* filename) {
+    FILE *file = fopen(filename, "w");
+    // Vi?t logic xu?t d? li?u
+    fclose(file);
+}*/
 
