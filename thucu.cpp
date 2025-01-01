@@ -60,7 +60,7 @@ void displayMenu(){
 }
 
 void showAllStudents() {
-    printf("\n\t\t\t\t\t\t**** All Students List ****\n");
+    printf("\n\t\t\t\t\t**** All Students List ****\n");
     printf("\n");
     printf("|========================================================================================================|\n");
     printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
@@ -186,7 +186,7 @@ void editStudent() {
     fgets(student->name, sizeof(student->name), stdin);
     student->name[strcspn(student->name, "\n")] = '\0';
 
-    printf("Birthdate (day month year) (current: %02d/%02d/%04d): ",
+    printf("Birthdate (day/month/year) (current: %02d/%02d/%04d): ",
     student->date.day, student->date.month, student->date.year);
     scanf("%d %d %d", &student->date.day, &student->date.month, &student->date.year);
 
@@ -251,7 +251,7 @@ void searchStudent() {
     }
 }
 //In kieu ms(mili/s)
-void printSlowly(const char *mes, int delay){
+void printSlowly(const char *mes, int delay){///chonay quennnn
 	for(int i = 0; mes[i] != '\0'; i++){
 		printf("%c",mes[i]);
 		fflush(stdout);
@@ -284,8 +284,8 @@ void back_or_exit(){
     }
 } 
 //0giam1tang
-void sort_Student_i_or_d(struct Student students[],int n){
-	Student temp;
+void sort_Student_i_or_d(struct Student students[100],int n){
+	struct Student temp;
 	int check = 0;
 	char choice;
 	do{
@@ -367,6 +367,7 @@ int main() {
                     case 5:
                     	system("cls");
                     	sort_Student_i_or_d(students,n);
+                    	break;
 					case 6:
                         printSlowly("\nExisting student menu",50);
                         printSlowly("...",150);
