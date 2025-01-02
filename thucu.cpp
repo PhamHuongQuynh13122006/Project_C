@@ -132,7 +132,7 @@ void addStudent() {
     fgets(new_student.name, sizeof(new_student.name), stdin);
     new_student.name[strcspn(new_student.name, "\n")] = '\0';
     ////////
-    printf("\tBirthdate (day month year): ");
+    printf("\tBirthdate (day/month/year): ");
     scanf("%d/%d/%d", &new_student.date.day, &new_student.date.month, &new_student.date.year);
     /////////
 	printf("\tGender (1 for Male, 0 for Female): ");
@@ -284,86 +284,9 @@ void back_or_exit(){
 	}
     }
 }
-/*void deleted(struct Student students[],int *n){
-	printf("Input the ID of the student to delete : ");
-	int id;
-	fflush(stdin);
-	scanf("%d",&id);
-	int check = -1;
-	for(int i=0;i<*n;i++){
-		if(students[i].student_id == id){
-			check = i;
-			break;
-		}
-	}
-	check = -1;
-	if(check == -1){
-		printf("Student with ID : %d not found ^ ^",id);
-	}else{
-		printf("Student found with ID : %d is : ");
-		printf("You that su muon xoa ID nay chuw : ");
-	//	int confirm;
-		getchar();
-		scanf("%d",confirm);
-		if(confirm == "YES"){
-		    printf("|========================================================================================================|\n");
-				printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
-                printf("|____|___________|________________|____________|_________|_____________________|_______________|_________|\n");
-            }
-            printf("| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-12s | %-7d |\n",
-                   students[i].student_id,
-                   students[i].classroom,
-                   students[i].name,
-                   students[i].date.day,
-                   students[i].date.month,
-                   students[i].date.year,
-                   students[i].gender ? "Male" : "Female",
-                   students[i].email,
-                   students[i].phone,
-                   students[i].number_course);
-	    }else if(confirm == "NO"){
-	    ////	
-		}else{
-			printf("Invalid ....");
-		}
-		printf("Student found with ID: %d\n", id);
-    printf("|========================================================================================================|\n");
-    printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
-    printf("|____|___________|________________|____________|_________|_____________________|_______________|_________|\n");
-    printf("| %-2d | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-12s | %-7d |\n",
-           students[index].student_id,
-           students[index].classroom,
-           students[index].name,
-           students[index].date.day,
-           students[index].date.month,
-           students[index].date.year,
-           students[index].gender ? "Male" : "Female",
-           students[index].email,
-           students[index].phone,
-           students[index].number_course);
-
-    char confirm[4];
-    printf("Are you sure you want to delete this student? (YES/NO): ");
-    scanf("%s", confirm);
-
-    if (strcmp(confirm, "YES") == 0) {
-        // Delete the student by shifting the array
-        for (int i = index; i < *n - 1; i++) {
-            students[i] = students[i + 1];
-        }
-        (*n)--; // Decrease the size of the array
-        printf("Student deleted successfully!\n");
-    } else if (strcmp(confirm, "NO") == 0) {
-        printf("Deletion canceled.\n");
-    } else {
-        printf("Invalid input. Deletion canceled.\n");
-    }
-}
-	}
-}*/
 void deleted(struct Student students[], int *n) {
     printf("Input the ID of the student to delete: ");
-    char id[10]; 
+    char id[20]; 
     fflush(stdin);
     scanf("%s", id);  
     int index = -1;
@@ -374,13 +297,13 @@ void deleted(struct Student students[], int *n) {
         }
     }
     if (index == -1) {
-        printf("Student with ID: %s not found.\n", id);
+        printf("Student with ID : %s not found.\n", id);
     } else {
         printf("Student found with ID: %s\n", id);
         printf("|========================================================================================================|\n");
         printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
         printf("|____|___________|________________|____________|_________|_____________________|_______________|_________|\n");
-        printf("| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-12s | %-7d |\n",
+        printf("| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-13s | %-7d |\n",
                students[index].student_id,
                students[index].classroom,
                students[index].name,
@@ -393,25 +316,23 @@ void deleted(struct Student students[], int *n) {
                students[index].number_course);
         printf("|========================================================================================================|\n");
 
-        char confirm[4];
-        printf("Are you sure you want to delete this student? (YES/NO): ");
+        char confirm[10];
+        printf("Are you sure you want to delete this student ? (YES/NO): ");
+        //printf("You co chac la you muon ...ko");
         scanf("%s", confirm);
-
         if (strcmp(confirm, "YES") == 0) {
             for (int i = index; i < *n - 1; i++) {
                 students[i] = students[i + 1];
             }
             (*n)--;  
-            printf("Student deleted successfully!\n");
+            printf("Student deleted successfully^ ^\n");
         } else if (strcmp(confirm, "NO") == 0) {
             printf("Deletion canceled.\n");
         } else {
-            printf("Invalid input. Deletion canceled.\n");
+            printf("Invalid input. Deletion canceled ^ ^\n");
         }
     }
 }
-
- 
 //0giam1tang
 void sort_Student_i_or_d(struct Student students[100],int n){
 	struct Student temp;
