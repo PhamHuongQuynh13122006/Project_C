@@ -285,6 +285,10 @@ void back_or_exit(){
     }
 }
 void deleted(struct Student students[], int *n) {
+	if (n <= 0) {
+        printf("Cannot delete students.\n");
+        return;
+    }
     printf("Input the ID of the student to delete: ");
     char id[20]; 
     fflush(stdin);
@@ -314,7 +318,8 @@ void deleted(struct Student students[], int *n) {
                students[index].email,
                students[index].phone,
                students[index].number_course);
-        printf("|========================================================================================================|\n");  
+        printf("|========================================================================================================|\n");
+
         char confirm[10];
         printf("Are you sure you want to delete this student ? (YES/NO): ");
         //printf("You co chac la you muon ...ko");
@@ -329,26 +334,6 @@ void deleted(struct Student students[], int *n) {
             printf("Deletion canceled.\n");
         } else {
             printf("Invalid input. Deletion canceled ^ ^\n");
-            while(confirm == "YES"&&confirm == "NO"){
-			printf("Are you sure you want to delete this student ? (YES/NO): ");
-            fflush(stdin);
-            scanf("%s", id);  
-           // int index = -1;
-            for (int i = 0; i < *n; i++) {
-			    if (strcmp(students[i].student_id, id) == 0) {
-                index = i; 
-                break;
-                 }
-            }
-            }
-        }
-    }
-		}
-		if(strlen(temp_id)>10){
-			printf("Error : ID cannot be more than 10 characters.\n");
-            check = 0;
-		}
-	}
         }
     }
 }

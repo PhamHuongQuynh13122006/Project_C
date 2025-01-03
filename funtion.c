@@ -38,7 +38,7 @@ void menuStart(int *menu) {
         printf("\n\tEnter your choice: ");
         if (scanf("%d", menu) != 1) {
             printf("Invalid input! Exiting.\n");
-            exit(1);
+            break;
         }
     } while (*menu < 1 || *menu > 4);
 }
@@ -56,14 +56,15 @@ void displayMenu(){
     printf("\t[7] Exit\n");
     printf("\n\tEnter your choice: ");
 }
-
-void showAllStudents() {
+struct Student students[100];
+void showAllStudents(struct Student students[100], int n) {
     printf("\n\t\t\t\t\t**** All Students List ****\n");
     printf("\n");
     printf("|========================================================================================================|\n");
     printf("| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
     printf("|____|___________|________________|____________|_________|_____________________|_______________|_________|\n");
-    for (int i = 0; i < n; i++) {
+    int i;
+	for(i = 0; i < *n; i++){
         printf("| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-13s | %-7d |\n",
                students[i].student_id,
                students[i].classroom,
@@ -79,7 +80,7 @@ void showAllStudents() {
     printf("---------------------------------------------------------------------------------------------------------\n");
 }
 
-void addStudent() {
+void addStudent(int n) {
 	struct Student new_student;
 	system("cls");
     if (n >= 100) {
@@ -94,7 +95,8 @@ void addStudent() {
     	printf("\n\tInput Student ID: ");
         scanf("%s", temp_id);
         check = 1;
-        for(int i=0;i<n;i++){
+        int i;
+        for(i=0;i<n;i++){
         	if(strcmp(students[i].student_id,temp_id)==0){
         		printf("Error: Duplicate id\n");
         		check = 0;
@@ -120,12 +122,12 @@ void addStudent() {
 		printf("Error: Classroom cannot be empty ^ ^\n");*/
 	}else{
 		break;
-	}	
+	}
 	}
 	strcpy(new_student.classroom,temp_classroom);
 	////////
     printf("\tInput the name: ");
-    getchar(); 
+    getchar();
     fgets(new_student.name, sizeof(new_student.name), stdin);
     new_student.name[strcspn(new_student.name, "\n")] = '\0';
     ////////
@@ -156,13 +158,14 @@ void addStudent() {
     printf("\tStudent added successfully.\n");
 }
 
-void editStudent() {
+void editStudent(int n) {
     char student_id[100];
     printf("\nEnter the ID of the student to edit: ");
     scanf("%s", student_id);
 
     int found = -1;
-    for (int i = 0; i < n; i++) {
+    int i;
+        for(i=0;i<n;i++){
         if (strcmp(students[i].student_id, student_id) == 0) {
             found = i;
             break;
@@ -180,7 +183,7 @@ void editStudent() {
     scanf("%s", student->classroom);
 
     printf("Name (current: %s): ", student->name);
-    getchar(); 
+    getchar();
     fgets(student->name, sizeof(student->name), stdin);
     student->name[strcspn(student->name, "\n")] = '\0';
 
@@ -207,9 +210,9 @@ void editStudent() {
     scanf("%d", &student->number_course);
     getchar();
     printf("Student information updated successfully.\n");
-    
+
 }
-void searchStudent() {
+void searchStudent(int n) {
     if (n <= 0) {
         printf("\n\tNo student data available to search.\n");
         return;
@@ -220,7 +223,8 @@ void searchStudent() {
     fgets(search, sizeof(search), stdin);
     search[strcspn(search, "\n")] = '\0';
     int check = 0;
-    for (int i = 0; i < n; i++) {
+    int i;
+        for(i=0;i<n;i++){
         if (strstr(students[i].name, search) != NULL) {
             if (check == 0) {
                 printf("\n\tStudent information found!!\n");
@@ -250,13 +254,14 @@ void searchStudent() {
 }
 //In kieu ms(mili/s)
 void printSlowly(const char *mes, int delay){///chonay quennnn
-	for(int i = 0; mes[i] != '\0'; i++){
+	int i;
+	for(i = 0; mes[i] != '\0'; i++){
 		printf("%c",mes[i]);
 		fflush(stdout);
 		Sleep(delay);
 	}
 }
-//In ket thuc chuong trinh 
+//In ket thuc chuong trinh
 void printfinish(){
 	printf("\n\t\t========== Thank You ==========");
 	printf("\n\t\t ======= See You Soon ========");
@@ -271,7 +276,7 @@ void back_or_exit(){
 		printSlowly("\n\tExiting program",40);
 		printSlowly("...\n",160);
 		printfinish();
-		exit(0);
+		break;
 	}else if(choice == 'b'){
 		return;
 		//in la loi do
@@ -287,13 +292,14 @@ void deleted(struct Student students[], int *n) {
         return;
     }
     printf("Input the ID of the student to delete: ");
-    char id[20]; 
+    char id[20];
     fflush(stdin);
-    scanf("%s", id);  
+    scanf("%s", id);
     int index = -1;
-    for (int i = 0; i < *n; i++) {
+    int i;
+        for(i=0;i<*n;i++){
         if (strcmp(students[i].student_id, id) == 0) {
-            index = i; 
+            index = i;
             break;
         }
     }
@@ -322,10 +328,11 @@ void deleted(struct Student students[], int *n) {
         //printf("You co chac la you muon ...ko");
         scanf("%s", confirm);
         if (strcmp(confirm, "YES") == 0) {
-            for (int i = index; i < *n - 1; i++) {
+        	int i;
+            for (i = index; i < *n - 1; i++) {
                 students[i] = students[i + 1];
             }
-            (*n)--;  
+            (*n)--;
             printf("Student deleted successfully^ ^\n");
         } else if (strcmp(confirm, "NO") == 0) {
             printf("Deletion canceled.\n");
@@ -355,8 +362,10 @@ void sort_Student_i_or_d(struct Student students[100],int n){
 	}
 	while(choice != '1' && choice != '2');
 	check = (choice == '1'? 1 : 0);
-	for(int i=0;i<n-1;i++){
-		for(int j=i+1;j<n;j++){
+	int i;
+	for(i=0;i<n-1;i++){
+		int j;
+		for(j=i+1;j<n;j++){
 			if(check ? strcmp(students[i].name, students[j].name)>0:
 			           strcmp(students[i].name,students[j].name)<0){
 					   temp = students[i];
@@ -369,19 +378,20 @@ void sort_Student_i_or_d(struct Student students[100],int n){
 	printf("\n\t\t|========================================================================================================|\n");
 	printf("\t\t| ID | Classroom |   Name         | Birthdate  | Gender  | Email               | Phone         | Courses |\n");
     printf("\t\t|____|___________|________________|____________|_________|_____________________|_______________|_________|\n");
-    for(int i = 0; i < n; i++){
-        printf("\t\t| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-13s | %-7d |\n",
-		        students[i].student_id,
-                students[i].classroom,
-                students[i].name,
-                students[i].date.day,
-                students[i].date.month,
-                students[i].date.year,
-                students[i].gender ? "Male" : "Female",
-                students[i].email,
-                students[i].phone,
-                students[i].number_course);
-    }
+     int j;
+        for(j=0;j<n;j++){
+		printf("\t\t| %-2s | %-9s | %-14s | %02d/%02d/%04d | %-7s | %-19s | %-13s | %-7d |\n",
+		        students[j].student_id,
+                students[j].classroom,
+                students[j].name,
+                students[j].date.day,
+                students[j].date.month,
+                students[j].date.year,
+                students[j].gender ? "Male" : "Female",
+                students[j].email,
+                students[j].phone,
+                students[j].number_course);
+        }
     printf("\t\t----------------------------------------------------------------------------------------------------------\n");
     back_or_exit();
 }

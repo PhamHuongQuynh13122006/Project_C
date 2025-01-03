@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
-//#include "function.h"
-//#include "include/datatype.h"
-#include "include/function.h"
+
 int n = 5;
 int main() {
     int menu;
@@ -40,11 +38,11 @@ int main() {
                     	break;
                     case 5:
                     	system("cls");
-                    	sort_Student_i_or_d(students,n);
+                    	sort_Student_i_or_d();
                     	break;
 					case 6:
 						system("cls");
-						deleted(students, &n);
+						deleted();
 						break;
 					case 7:
                         printSlowly("\nExisting student menu",50);
