@@ -3,7 +3,7 @@
 struct Date {
     int day, month, year;
 };
-struct Student {
+struct Student{
     char student_id[10];
     char classroom[10];
     char name[50];
@@ -14,5 +14,4 @@ struct Student {
     char password[50];
     int number_course;
 };
-
 
