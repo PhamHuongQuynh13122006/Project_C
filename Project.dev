@@ -71,7 +71,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=funtion.h
+FileName=function.h
 CompileCpp=0
 Folder=include
 Compile=1
